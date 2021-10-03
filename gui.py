@@ -157,7 +157,7 @@ class Window(tk.Tk):
 
     def load(self):
         file_name = filedialog.askopenfilename(filetypes=[("Serialized Data", "*.pkl")], defaultextension="pkl")
-        if file_name == "":
+        if not file_name:
             return
 
         try:
@@ -203,6 +203,10 @@ class Window(tk.Tk):
             )
             return
 
+        file = filedialog.asksaveasfile(filetypes=[("Serialized Data", "*.pkl")], defaultextension=".pkl")
+        if not file:
+            return
+
         whiten_eigenvectors = self.whiten_eigenvectors.get()
         n_eigenvectors = self.n_eigenvectors.get()
         kernel = self.kernel.get()
@@ -222,7 +226,6 @@ class Window(tk.Tk):
             self.results
         ]
 
-        file = filedialog.asksaveasfile(filetypes=[("Serialized Data", "*.pkl")], defaultextension="pkl")
         with open(file.name, "wb") as f:
             pickle.dump(pickle_rick, f)
 
